@@ -1,6 +1,7 @@
 package hub
 
 import (
+	sentrygin "github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/gin"
 	wechat "github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
@@ -28,10 +29,15 @@ var logger = logrus.WithField("hub", "internal")
 func Init() {
 	logger.Info("wechat-mp-server version: ", Version)
 
+	initSentry()
+
 	// 初始化网络服务
 	logger.Info("start init gin...")
 	gin.SetMode(gin.ReleaseMode)
 	httpEngine := gin.New()
+	if enableSentry() {
+		httpEngine.Use(sentrygin.New(sentrygin.Options{}))
+	}
 	httpEngine.Use(ginRequestLog)
 
 	// 初始化微信相关

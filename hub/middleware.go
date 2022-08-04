@@ -108,36 +108,34 @@ func wechatLongMsgHandle(m *Message) {
 	case <-time.After(time.Millisecond * 4500): // 微信那边超时是5s 文档没写具体怎么算的5s 所以4.5s保险
 		m.Reply = nil
 		go func(m *Message) {
-			select {
-			case <-ctx.Done():
-				// 超时后调了客服消息，所以得分类处理各类客服消息
-				switch m.Reply.MsgType {
-				case message.MsgTypeText:
-					Content := m.Reply.MsgData.(*message.Text).Content
-					reply := utils.CutMsg(string(Content), 2000, 1750)
-					if len(reply) > 0 {
-						for i := 0; i < len(reply); i++ {
-							go func(msg string, order int) {
-								time.Sleep(time.Duration(order) * 200 * time.Millisecond)
-								textMessage := message.NewCustomerTextMessage(m.GetOpenID(), msg)
-								sendCustomerMsg(textMessage)
-							}(reply[i], i)
-						}
+			<-ctx.Done()
+			// 超时后调了客服消息，所以得分类处理各类客服消息
+			switch m.Reply.MsgType {
+			case message.MsgTypeText:
+				Content := m.Reply.MsgData.(*message.Text).Content
+				reply := utils.CutMsg(string(Content), 2000, 1750)
+				if len(reply) > 0 {
+					for i := 0; i < len(reply); i++ {
+						go func(msg string, order int) {
+							time.Sleep(time.Duration(order) * 200 * time.Millisecond)
+							textMessage := message.NewCustomerTextMessage(m.GetOpenID(), msg)
+							sendCustomerMsg(textMessage)
+						}(reply[i], i)
 					}
-				case message.MsgTypeImage:
-					imgMessage := message.NewCustomerImgMessage(m.GetOpenID(), m.Reply.MsgData.(*message.Image).Image.MediaID)
-					sendCustomerMsg(imgMessage)
-				case message.MsgTypeVoice:
-					voiceMessage := message.NewCustomerVoiceMessage(m.GetOpenID(), m.Reply.MsgData.(*message.Voice).Voice.MediaID)
-					sendCustomerMsg(voiceMessage)
-				case message.MsgTypeMiniprogrampage:
-					miniProgramPageMessage := message.NewCustomerMiniprogrampageMessage(m.GetOpenID(),
-						m.Reply.MsgData.(*message.MediaMiniprogrampage).Title,
-						m.Reply.MsgData.(*message.MediaMiniprogrampage).AppID,
-						m.Reply.MsgData.(*message.MediaMiniprogrampage).Pagepath,
-						m.Reply.MsgData.(*message.MediaMiniprogrampage).ThumbMediaID)
-					sendCustomerMsg(miniProgramPageMessage)
 				}
+			case message.MsgTypeImage:
+				imgMessage := message.NewCustomerImgMessage(m.GetOpenID(), m.Reply.MsgData.(*message.Image).Image.MediaID)
+				sendCustomerMsg(imgMessage)
+			case message.MsgTypeVoice:
+				voiceMessage := message.NewCustomerVoiceMessage(m.GetOpenID(), m.Reply.MsgData.(*message.Voice).Voice.MediaID)
+				sendCustomerMsg(voiceMessage)
+			case message.MsgTypeMiniprogrampage:
+				miniProgramPageMessage := message.NewCustomerMiniprogrampageMessage(m.GetOpenID(),
+					m.Reply.MsgData.(*message.MediaMiniprogrampage).Title,
+					m.Reply.MsgData.(*message.MediaMiniprogrampage).AppID,
+					m.Reply.MsgData.(*message.MediaMiniprogrampage).Pagepath,
+					m.Reply.MsgData.(*message.MediaMiniprogrampage).ThumbMediaID)
+				sendCustomerMsg(miniProgramPageMessage)
 			}
 		}(m)
 	case <-ctx.Done():

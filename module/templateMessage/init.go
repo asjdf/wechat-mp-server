@@ -50,7 +50,6 @@ func (m *Module) PostInit() {
 
 func (m *Module) Serve(s *hub.Server) {
 	Template = message.NewTemplate(s.WechatEngine.GetContext())
-	registerRouter(s)
 	go m.registerMessageSender(m.MessageQueue)
 }
 
@@ -88,8 +87,4 @@ func (m *Module) Stop(_ *hub.Server, wg *sync.WaitGroup) {
 	close(m.MessageQueue) // 关闭此channel后sender携程会自己关闭
 	m.MessageSenderWaitGroup.Wait()
 	wg.Done()
-}
-
-func registerRouter(s *hub.Server) {
-	s.HttpEngine.POST("/api/temp_msg", handleOldWechatTemplateMessage) // 为了兼容 实现一下老接口
 }

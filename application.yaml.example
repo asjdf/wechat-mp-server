@@ -1,6 +1,9 @@
 httpEngine:
   port: 10151
 
+sentry:
+  dsn: https://a
+
 wechat:
   appID: xxxxxxxxxxxxx
   appSecret: xxxxxxxxxxx
