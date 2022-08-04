@@ -1,0 +1,31 @@
+kind: pipeline
+type: docker #在docker runner中运行
+name: CI & CD
+
+steps:
+  - name: build & deploy #部署到服务器上
+    image: docker
+    volumes:
+      - name: sock
+        path: /var/run/docker.sock
+      - name: wechat-mp-server
+        path: /opt/wechat-mp-server
+    commands:
+      - echo ====开始构建容器=======
+      - docker build -t wechat-mp-server:latest -f Dockerfile .
+      - echo ====开始停止容器=======
+      - if docker ps -a| grep -q "wechat-mp-server";then docker stop `docker ps -a| grep wechat-mp-server | awk '{print $1}'`;fi
+      - if docker ps -a| grep -q "wechat-mp-server";then docker rm -f `docker ps -a| grep wechat-mp-server | awk '{print $1}'`;fi
+      - echo ====开始启动容器=======
+      - docker run --name wechat-mp-server --restart=always -v /opt/wechat-mp-server/log:/root/wechat-mp-server/log -v /opt/wechat-mp-server/config.yaml:/root/wechat-mp-server/config.yaml --publish 127.0.0.1:10150:10150 -d wechat-mp-server:latest
+      - echo ====部署成功======
+      - docker image prune -a -f    # 清理无用镜像
+
+# 挂载宿主机文件到docker容器中
+volumes:
+  - name: sock
+    host:
+      path: /var/run/docker.sock
+  - name: wechat-mp-server
+    host:
+      path: /opt/wechat-mp-server
