@@ -6,7 +6,7 @@ WORKDIR /source
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main -ldflags "-X 'wechat-mp-server/hub.Version=$(git show -s --format=%h)'"
 
 FROM alpine:latest
-WORKDIR /root/pinnacle
+WORKDIR /root
 COPY --from=builder /source/main ./
 EXPOSE 10151
 ENTRYPOINT ["./main"]
