@@ -37,6 +37,7 @@ func Init() {
 	httpEngine := gin.New()
 	if enableSentry() {
 		httpEngine.Use(sentrygin.New(sentrygin.Options{}))
+		logger.Info("sentry enabled")
 	}
 	httpEngine.Use(ginRequestLog)
 
