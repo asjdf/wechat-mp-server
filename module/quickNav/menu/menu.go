@@ -22,7 +22,7 @@ func Temp(staffId string, item ...Item) string {
 	for _, v := range item {
 		info := v.Info(staffId)
 		if !info.Hide {
-			if rowLength+utf8.RuneCountInString(info.Name) > maxRowLength && output[len(output)-1] != '\n' { // 超出最大字数上限且之前没有换行 则换行
+			if rowLength+utf8.RuneCountInString(info.Name) > maxRowLength && len(output) > 0 && output[len(output)-1] != '\n' { // 超出最大字数上限且之前没有换行 则换行
 				output += "\n"
 				rowLength = 0
 			}
