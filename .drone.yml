@@ -17,7 +17,7 @@ steps:
       - if docker ps -a| grep -q "wechat-mp-server";then docker stop `docker ps -a| grep wechat-mp-server | awk '{print $1}'`;fi
       - if docker ps -a| grep -q "wechat-mp-server";then docker rm -f `docker ps -a| grep wechat-mp-server | awk '{print $1}'`;fi
       - echo ====开始启动容器=======
-      - docker run --name wechat-mp-server --restart=always -v /opt/wechat-mp-server/log:/root/log -v /opt/wechat-mp-server/application.yaml:/root/application.yaml --publish 127.0.0.1:10151:10151 -d wechat-mp-server:latest
+      - docker run --name wechat-mp-server --restart=always -v /opt/wechat-mp-server/logs:/root/logs -v /opt/wechat-mp-server/application.yaml:/root/application.yaml --publish 127.0.0.1:10151:10151 -d wechat-mp-server:latest
       - echo ====部署成功======
       - docker image prune -a -f    # 清理无用镜像
 
