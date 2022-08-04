@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/getsentry/sentry-go"
 	"os"
 	"os/signal"
 	"syscall"
@@ -23,6 +24,11 @@ func init() {
 }
 
 func main() {
+	defer func() {
+		if err := recover(); err != nil {
+			sentry.CaptureException(err.(error))
+		}
+	}()
 	hub.Init()
 
 	hub.StartService()
