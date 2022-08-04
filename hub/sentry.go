@@ -19,7 +19,7 @@ func initSentry() {
 		logger.Fatalf("sentry.Init: %s", err)
 	}
 	logger.Info("sentry init success")
-	//sentry.CaptureMessage("It works!")
+	sentry.CaptureMessage("It works!")
 }
 
 func enableSentry() bool {
