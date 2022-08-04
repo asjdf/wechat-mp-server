@@ -60,7 +60,7 @@ func Init() {
 func Run() {
 	go func() {
 		logger.Info("http engine starting...")
-		if err := Instance.HttpEngine.Run("127.0.0.1:" + config.GlobalConfig.GetString("httpEngine.port")); err != nil {
+		if err := Instance.HttpEngine.Run(":" + config.GlobalConfig.GetString("httpEngine.port")); err != nil {
 			logger.Fatal(err)
 		} else {
 			logger.Info("http engine running...")
