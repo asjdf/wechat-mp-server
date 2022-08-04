@@ -35,11 +35,11 @@ func Init() {
 	logger.Info("start init gin...")
 	gin.SetMode(gin.ReleaseMode)
 	httpEngine := gin.New()
+	httpEngine.Use(ginRequestLog, gin.Recovery())
 	if enableSentry() {
-		httpEngine.Use(sentrygin.New(sentrygin.Options{}))
+		httpEngine.Use(sentrygin.New(sentrygin.Options{Repanic: true}))
 		logger.Info("sentry enabled")
 	}
-	httpEngine.Use(ginRequestLog)
 
 	// 初始化微信相关
 	logger.Info("start init wechat...")
