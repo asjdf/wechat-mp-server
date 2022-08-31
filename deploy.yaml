@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wechat-mp-server
+  namespace: default
+  labels:
+    app: wechat-mp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wechat-mp-server
+  template:
+    metadata:
+      labels:
+        app: wechat-mp-server
+    spec:
+      containers:
+        - name: wechat-mp-server
+          image: {{.image_repo}}:{{.image_tag}}
+          ports:
+            - containerPort: {{.service_port}}
+              protocol: TCP
+          imagePullPolicy: Always
+          env:
+            - name: SENTRY.DSN
+              value: {{.sentry_dsn}}
+            - name: WECHAT.APPID
+              value: {{.wechat_appid}}
+            - name: WECHAT.APPSECRET
+              value: {{.wechat_appsecret}}
+            - name: WECHAT.TOKEN
+              value: {{.wechat_token}}
+            - name: WECHAT.ENCODINGAESKEY
+              value: {{.wechat_encodingaeskey}}
+            - name: HTTPENGINE.PORT
+              value: {{.service_port}}
+      restartPolicy: Always

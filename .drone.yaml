@@ -12,8 +12,29 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
-      repo: registry.us-west-1.aliyuncs.com/homeboyc/wechat-mp-server
+      repo:
+        from_secret: image_repo
       registry: registry.us-west-1.aliyuncs.com
       tags:
         - latest
         - ${DRONE_COMMIT}
+
+  - name: dron8s
+    image: bh90210/dron8s:latest
+    settings:
+      yaml: ./deploy.yaml
+      image_repo:
+        from_secret: image_repo
+      image_tag: ${DRONE_COMMIT}
+      service_port:
+        from_secret: service_port
+      sentry_dsn:
+        from_secret: sentry_dsn
+      wechat_appid:
+        from_secret: wechat_appid
+      wechat_appsecret:
+        from_secret: wechat_appsecret
+      wechat_token:
+        from_secret: wechat_token
+      wechat_encodingaeskey:
+        from_secret: wechat_encodingaeskey
