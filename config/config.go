@@ -18,6 +18,7 @@ func Init() {
 	GlobalConfig = &Config{
 		viper.New(),
 	}
+	GlobalConfig.AutomaticEnv()
 	GlobalConfig.SetConfigName("application")
 	GlobalConfig.SetConfigType("yaml")
 	GlobalConfig.AddConfigPath(".")
