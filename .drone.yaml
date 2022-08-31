@@ -1,0 +1,19 @@
+kind: pipeline
+type: kubernetes
+name: CI & CD
+
+steps:
+  - name: docker
+    image: plugins/docker
+    settings:
+      mirror:
+        from_secret: docker_mirror
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+      repo: registry.us-west-1.aliyuncs.com/homeboyc/wisdom-party
+      registry: registry.us-west-1.aliyuncs.com
+      tags:
+        - latest
+        - ${DRONE_COMMIT}
