@@ -16,30 +16,10 @@ steps:
         from_secret: image_repo
       registry:
         from_secret: docker_registry
-      target: build
-      cache_from: ${image_repo}:build
+      target: builder
+      cache_from: ${image_repo}:builder
       tags:
-        - build
-
-  - name: docker-build-first-time
-    image: plugins/docker
-    when:
-      status:
-        - failure
-    settings:
-      mirror:
-        from_secret: docker_mirror
-      username:
-        from_secret: username
-      password:
-        from_secret: password
-      repo:
-        from_secret: image_repo
-      registry:
-        from_secret: docker_registry
-      target: build
-      tags:
-        - build
+        - builder
 
   - name: docker
     image: plugins/docker
@@ -55,7 +35,7 @@ steps:
       registry:
         from_secret: docker_registry
       cache_from:
-        - ${image_repo}:build
+        - ${image_repo}:builder
         - ${image_repo}:latest
       tags:
         - latest
