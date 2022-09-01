@@ -3,6 +3,24 @@ type: kubernetes
 name: CI & CD
 
 steps:
+  - name: docker-build
+    image: plugins/docker
+    settings:
+      mirror:
+        from_secret: docker_mirror
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+      repo:
+        from_secret: image_repo
+      registry:
+        from_secret: docker_registry
+      target: build
+      cache_from: ${image_repo}:build
+      tags:
+        - build
+
   - name: docker
     image: plugins/docker
     settings:
@@ -14,20 +32,24 @@ steps:
         from_secret: docker_password
       repo:
         from_secret: image_repo
-      registry: registry.us-west-1.aliyuncs.com
+      registry:
+        from_secret: docker_registry
+      cache_from:
+        - ${image_repo}:build
+        - ${image_repo}:latest
       tags:
         - latest
         - ${DRONE_COMMIT}
 
-  - name: dron8s
-    image: bh90210/dron8s:latest
-    settings:
-      yaml: ./deploy.yaml
-      image_repo: ${image_repo}
-      image_tag: ${DRONE_COMMIT}
-      service_port: ${service_port}
-      sentry_dsn: ${sentry_dsn}
-      wechat_appid: ${wechat_appid}
-      wechat_appsecret: ${wechat_appsecret}
-      wechat_token: ${wechat_token}
-      wechat_encodingaeskey: ${wechat_encodingaeskey}
+#  - name: dron8s
+#    image: bh90210/dron8s:latest
+#    settings:
+#      yaml: ./deploy.yaml
+#      image_repo: ${image_repo}
+#      image_tag: ${DRONE_COMMIT}
+#      service_port: ${service_port}
+#      sentry_dsn: ${sentry_dsn}
+#      wechat_appid: ${wechat_appid}
+#      wechat_appsecret: ${wechat_appsecret}
+#      wechat_token: ${wechat_token}
+#      wechat_encodingaeskey: ${wechat_encodingaeskey}
