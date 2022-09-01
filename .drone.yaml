@@ -17,7 +17,7 @@ steps:
       registry:
         from_secret: docker_registry
       target: builder
-      cache_from: ${image_repo}:builder
+#      cache_from: ${image_repo}:builder
       tags:
         - builder
 
