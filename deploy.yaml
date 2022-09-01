@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: wechat-mp-server
-          image: {{.image_repo.Value}}:{{.image_tag}}
+          image: {{.image_repo}}:{{.image_tag}}
           ports:
             - containerPort: {{.service_port.Value}}
               protocol: TCP
