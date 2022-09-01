@@ -3,23 +3,23 @@ type: kubernetes
 name: CI & CD
 
 steps:
-#  - name: docker-build
-#    image: plugins/docker
-#    settings:
-#      mirror:
-#        from_secret: docker_mirror
-#      username:
-#        from_secret: username
-#      password:
-#        from_secret: password
-#      repo:
-#        from_secret: image_repo
-#      registry:
-#        from_secret: docker_registry
-#      target: builder
-#      cache_from: ${image_repo}:builder
-#      tags:
-#        - builder
+  - name: docker-build
+    image: plugins/docker
+    settings:
+      mirror:
+        from_secret: docker_mirror
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+      repo:
+        from_secret: image_repo
+      registry:
+        from_secret: docker_registry
+      target: builder
+      cache_from: ${image_repo}:builder
+      tags:
+        - builder
 
   - name: docker
     image: plugins/docker
