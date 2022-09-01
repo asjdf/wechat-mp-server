@@ -32,7 +32,8 @@ steps:
         from_secret: docker_password
       repo:
         from_secret: image_repo
-      registry: registry.us-west-1.aliyuncs.com
+      registry:
+        from_secret: docker_registry
       cache_from:
         - ${image_repo}:builder
         - ${image_repo}:latest
