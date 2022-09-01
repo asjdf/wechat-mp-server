@@ -19,20 +19,20 @@ spec:
         - name: wechat-mp-server
           image: {{.image_repo}}:{{.image_tag}}
           ports:
-            - containerPort: {{.service_port.Value}}
+            - containerPort: {{.service_port}}
               protocol: TCP
           imagePullPolicy: Always
           env:
             - name: SENTRY.DSN
-              value: {{.sentry_dsn.Value}}
+              value: {{.sentry_dsn}}
             - name: WECHAT.APPID
-              value: {{.wechat_appid.Value}}
+              value: {{.wechat_appid}}
             - name: WECHAT.APPSECRET
-              value: {{.wechat_appsecret.Value}}
+              value: {{.wechat_appsecret}}
             - name: WECHAT.TOKEN
-              value: {{.wechat_token.Value}}
+              value: {{.wechat_token}}
             - name: WECHAT.ENCODINGAESKEY
-              value: {{.wechat_encodingaeskey.Value}}
+              value: {{.wechat_encodingaeskey}}
             - name: HTTPENGINE.PORT
-              value: {{.service_port.Value}}
+              value: {{.service_port}}
       restartPolicy: Always
