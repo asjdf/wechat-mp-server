@@ -34,5 +34,5 @@ spec:
             - name: WECHAT.ENCODINGAESKEY
               value: {{.wechat_encodingaeskey}}
             - name: HTTPENGINE.PORT
-              value: {{.service_port}}
+              value: {{.service_port.Value}}
       restartPolicy: Always
