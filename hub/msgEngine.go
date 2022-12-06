@@ -283,7 +283,7 @@ func (msgEngine *MsgEngine) Serve(c *gin.Context) {
 func (msgEngine *MsgEngine) genMsgHandler() func(msg *message.MixMessage) *message.Reply {
 	return func(msg *message.MixMessage) *message.Reply {
 		// 新建上下文
-		superMessage := &Message{msg, nil, nil, sync.RWMutex{}, -1, nil, nil, nil}
+		superMessage := &Message{MixMessage: msg, RWMutex: sync.RWMutex{}, Index: -1}
 
 		// 下面的内容还可简化但还未作处理 等一个有缘人来冲
 		switch superMessage.Type() {

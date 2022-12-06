@@ -70,7 +70,7 @@ func (m *Message) Set(key string, value interface{}) {
 }
 
 // Get returns the value for the given key, ie: (value, true).
-// If the value does not exists it returns (nil, false)
+// If the value does not exist it returns (nil, false)
 func (m *Message) Get(key string) (value interface{}, exists bool) {
 	m.RLock()
 	value, exists = m.Keys[key]

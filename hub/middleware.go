@@ -109,6 +109,9 @@ func wechatLongMsgHandle(m *Message) {
 		m.Reply = nil
 		go func(m *Message) {
 			<-ctx.Done()
+			if m.Reply == nil {
+				return
+			}
 			// 超时后调了客服消息，所以得分类处理各类客服消息
 			switch m.Reply.MsgType {
 			case message.MsgTypeText:
@@ -139,6 +142,9 @@ func wechatLongMsgHandle(m *Message) {
 			}
 		}(m)
 	case <-ctx.Done():
+		if m.Reply == nil {
+			return
+		}
 		// 没有超时的情况 只需要处理长文本消息即可
 		if m.Reply.MsgType == message.MsgTypeText {
 			Content := m.Reply.MsgData.(*message.Text).Content
