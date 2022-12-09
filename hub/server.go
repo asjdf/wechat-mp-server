@@ -111,7 +111,7 @@ func Stop() {
 	wg := sync.WaitGroup{}
 	for _, mi := range Modules {
 		wg.Add(1)
-		mi.Instance.Stop(Instance, &wg)
+		go mi.Instance.Stop(Instance, &wg)
 	}
 	wg.Wait()
 	logger.Info("stopped")

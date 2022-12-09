@@ -10,5 +10,5 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "[chore]:"
+      prefix: "[chore]: "
       include: "scope"
