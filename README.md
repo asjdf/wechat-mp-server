@@ -30,6 +30,7 @@ module参考[wechatPong](https://github.com/asjdf/wechat-mp-server/blob/main/mod
 - [x] 长消息分段发送
 - [x] 超时回复处理
 - [x] 简单的模组定义
+- [x] 优雅的停机
 
 ## 快速开始
 1. 根据 application.yaml.example 的结构编写 application.yaml，框架默认的被动回复消息接口在 /serve

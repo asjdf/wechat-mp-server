@@ -1,14 +1,17 @@
 package hub
 
 import (
+	"context"
 	sentrygin "github.com/getsentry/sentry-go/gin"
 	"github.com/gin-gonic/gin"
-	wechat "github.com/silenceper/wechat/v2"
+	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	"github.com/silenceper/wechat/v2/officialaccount"
 	offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
 	"github.com/sirupsen/logrus"
+	"net/http"
 	"sync"
+	"time"
 	"wechat-mp-server/config"
 )
 
@@ -63,14 +66,18 @@ func Init() {
 	Instance.MsgEngine.Use(wechatMsgLog, wechatLongMsgHandle) // 注册log中间件
 }
 
+var srv *http.Server
+
 // Run 正式开启服务
 func Run() {
 	go func() {
 		logger.Info("http engine starting...")
-		if err := Instance.HttpEngine.Run(":" + config.GlobalConfig.GetString("httpEngine.port")); err != nil {
-			logger.Fatal(err)
-		} else {
-			logger.Info("http engine running...")
+		srv := &http.Server{
+			Addr:    ":" + config.GlobalConfig.GetString("httpEngine.port"),
+			Handler: Instance.HttpEngine,
+		}
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			logger.Fatalf("listen: %s\n", err)
 		}
 	}()
 }
@@ -108,6 +115,12 @@ func StartService() {
 // 调用此函数并不会使服务器关闭
 func Stop() {
 	logger.Warn("stopping ...")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(ctx); err != nil {
+		logger.Error("server forced to shutdown: " + err.Error())
+	}
+
 	wg := sync.WaitGroup{}
 	for _, mi := range Modules {
 		wg.Add(1)
