@@ -72,7 +72,7 @@ var srv *http.Server
 func Run() {
 	go func() {
 		logger.Info("http engine starting...")
-		srv := &http.Server{
+		srv = &http.Server{
 			Addr:    ":" + config.GlobalConfig.GetString("httpEngine.port"),
 			Handler: Instance.HttpEngine,
 		}
