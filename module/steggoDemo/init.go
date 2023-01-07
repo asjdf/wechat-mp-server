@@ -29,7 +29,8 @@ func (m *Mod) PostInit() {
 
 func (m *Mod) Serve(s *hub.Server) {
 	s.MsgEngine.MsgText("^告诉我一个秘密$", 1, func(msg *hub.Message) {
-		tracker, _ := steggo.Encode([]byte(msg.OpenID))
+		tracker, _ := steggo.Encode([]byte(msg.GetOpenID()))
+
 		msg.Reply = &message.Reply{
 			MsgType: message.MsgTypeText,
 			MsgData: message.NewText(fmt.Sprintf("这%s个秘密你可不能和别人说哦！这个后端的版本是%s", tracker, hub.Version)),
