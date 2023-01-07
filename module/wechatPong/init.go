@@ -1,7 +1,6 @@
 package wechatPong
 
 import (
-	"encoding/json"
 	"github.com/getsentry/sentry-go"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"sync"
@@ -78,14 +77,7 @@ func (m *wechatPong) Serve(s *hub.Server) {
 			},
 			Resend: true,
 		})
-		u := s.WechatEngine.GetUser()
-		tidList, err := u.UserTidList(msg.GetOpenID())
-		tidListStr := "tidList获取失败"
-		if err == nil {
-			marshal, _ := json.Marshal(tidList)
-			tidListStr = string(marshal)
-		}
-		msg.Reply = &message.Reply{MsgType: message.MsgTypeText, MsgData: message.NewText("pong " + msg.OpenID + " " + tidListStr + "\n" +
+		msg.Reply = &message.Reply{MsgType: message.MsgTypeText, MsgData: message.NewText("pong " + msg.OpenID + "\n" +
 			"Current version: " + hub.Version)}
 	}).MsgText("", 1).EventClick("")
 	// 由于group已经定义了一个中间件实现查询功能 所以后面注册具体方法的时候并不需要带上查询函数
