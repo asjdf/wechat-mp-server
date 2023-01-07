@@ -8,38 +8,31 @@ import (
 	"wechat-mp-server/module/templateMessage"
 )
 
-func init() {
-	instance = &wechatPong{}
-	hub.RegisterModule(instance)
+type Mod struct {
 }
 
-var instance *wechatPong
-
-type wechatPong struct {
-}
-
-func (m *wechatPong) GetModuleInfo() hub.ModuleInfo {
+func (m *Mod) GetModuleInfo() hub.ModuleInfo {
 	return hub.ModuleInfo{
 		// module 的 id 全部用 NewModule 函数生成
 		// namespace 为开发者，moduleName 为模块名（一般用包名） 方便锤开发者以及定位出错的包
 		ID:       hub.NewModuleID("atom", "wechatPong"),
-		Instance: instance,
+		Instance: m,
 	}
 }
 
-func (m *wechatPong) Init() {
+func (m *Mod) Init() {
 	// 初始化过程
 	// 在此处可以进行 Module 的初始化配置
 	// 如配置读取
 }
 
-func (m *wechatPong) PostInit() {
+func (m *Mod) PostInit() {
 	// 第二次初始化
 	// 再次过程中可以进行跨Module的动作
 	// 如通用数据库等等
 }
 
-func (m *wechatPong) Serve(s *hub.Server) {
+func (m *Mod) Serve(s *hub.Server) {
 	// 注册服务函数部分
 	// index 是匹配的优先级，index越大，优先级越高，优先测试该条匹配规则
 	// key 就是正则匹配的规则 当匹配上之后就该条路由
@@ -61,7 +54,7 @@ func (m *wechatPong) Serve(s *hub.Server) {
 		}()
 
 		templateMessageModule, _ := hub.GetModule(hub.NewModuleID("atom", "templateMessage"))
-		templateMessageSender := templateMessageModule.Instance.(*templateMessage.Module)
+		templateMessageSender := templateMessageModule.Instance.(*templateMessage.Mod)
 		templateMessageSender.PushMessage(&templateMessage.TemplateMessage{
 			Message: &message.TemplateMessage{
 				ToUser:     msg.GetOpenID(),
@@ -91,7 +84,7 @@ func (m *wechatPong) Serve(s *hub.Server) {
 	}).MsgText("^pong$", 1).MsgText("^poooong$", 1)
 }
 
-func (m *wechatPong) Start(_ *hub.Server) {
+func (m *Mod) Start(_ *hub.Server) {
 	// 请在可能出错的地方使用 sentry 接住错误 越早defer越好
 	defer sentry.Recover()
 
@@ -104,7 +97,7 @@ func (m *wechatPong) Start(_ *hub.Server) {
 	// 如http服务器等等
 }
 
-func (m *wechatPong) Stop(_ *hub.Server, wg *sync.WaitGroup) {
+func (m *Mod) Stop(_ *hub.Server, wg *sync.WaitGroup) {
 	// 别忘了解锁
 	defer wg.Done()
 	// 结束部分

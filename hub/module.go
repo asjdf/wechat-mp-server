@@ -43,19 +43,20 @@ type Module interface {
 }
 
 // RegisterModule - 向全局添加 Module
-func RegisterModule(instance Module) {
-	mod := instance.GetModuleInfo()
-	if mod.Instance == nil {
-		panic("missing ModuleInfo.Instance")
-	}
+func RegisterModule(mods ...Module) {
+	for _, mod := range mods {
+		mod := mod.GetModuleInfo()
+		if mod.Instance == nil {
+			panic("missing ModuleInfo.Instance")
+		}
 
-	modulesMu.Lock()
-	defer modulesMu.Unlock()
-
-	if _, ok := Modules[mod.ID.String()]; ok {
-		panic(fmt.Sprintf("module already registered: %s", mod.ID))
+		modulesMu.Lock()
+		if _, ok := Modules[mod.ID.String()]; ok {
+			panic(fmt.Sprintf("module already registered: %s", mod.ID))
+		}
+		Modules[mod.ID.String()] = mod
+		modulesMu.Unlock()
 	}
-	Modules[mod.ID.String()] = mod
 }
 
 // GetModule - 获取一个已注册的 Module 的 ModuleInfo

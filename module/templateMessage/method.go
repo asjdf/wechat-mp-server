@@ -17,14 +17,14 @@ type TemplateMessage struct {
 }
 
 // PushMessage 向消息队列中塞待发送消息
-func (m *Module) PushMessage(superMessage *TemplateMessage) {
+func (m *Mod) PushMessage(superMessage *TemplateMessage) {
 	go func() {
 		m.MessageQueue <- superMessage
 	}()
 }
 
 // registerMessageSender 创建新的协程来发送消息
-func (m *Module) registerMessageSender(msgChannel <-chan *TemplateMessage) {
+func (m *Mod) registerMessageSender(msgChannel <-chan *TemplateMessage) {
 	for msg := range msgChannel {
 		m.senderLimit <- struct{}{} // 等待有多余的协程量
 		m.MessageSenderWaitGroup.Add(1)
@@ -37,7 +37,7 @@ func (m *Module) registerMessageSender(msgChannel <-chan *TemplateMessage) {
 }
 
 // sendMessage 发送模板消息
-func (m *Module) sendMessage(templateMessage *TemplateMessage) {
+func (m *Mod) sendMessage(templateMessage *TemplateMessage) {
 	_, err := Template.Send(templateMessage.Message)
 
 	msgMarshal, _ := json.Marshal(templateMessage)

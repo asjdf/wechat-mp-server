@@ -13,8 +13,7 @@ import (
 )
 
 func init() {
-	instance = &Module{}
-	hub.RegisterModule(instance)
+	instance = &Mod{}
 	logger = utils.GetModuleLogger(instance.GetModuleInfo().String())
 }
 
@@ -22,38 +21,38 @@ var logger *logrus.Entry
 
 var Template *message.Template
 
-var instance *Module
+var instance *Mod
 
-type Module struct {
+type Mod struct {
 	MessageQueue           chan *TemplateMessage
 	MessageSenderWaitGroup sync.WaitGroup
 	senderLimit            chan struct{} // 最大协程限制
 }
 
-func (m *Module) GetModuleInfo() hub.ModuleInfo {
+func (m *Mod) GetModuleInfo() hub.ModuleInfo {
 	return hub.ModuleInfo{
 		ID:       hub.NewModuleID("atom", "templateMessage"),
 		Instance: instance,
 	}
 }
 
-func (m *Module) Init() {
+func (m *Mod) Init() {
 	logger.Info("Init template message sender...")
 
 	m.MessageQueue = make(chan *TemplateMessage, maxSenderNumber)
 	m.senderLimit = make(chan struct{}, maxSenderNumber)
 }
 
-func (m *Module) PostInit() {
+func (m *Mod) PostInit() {
 
 }
 
-func (m *Module) Serve(s *hub.Server) {
+func (m *Mod) Serve(s *hub.Server) {
 	Template = message.NewTemplate(s.WechatEngine.GetContext())
 	go m.registerMessageSender(m.MessageQueue)
 }
 
-func (m *Module) Start(_ *hub.Server) {
+func (m *Mod) Start(_ *hub.Server) {
 	// example:
 	//m.PushMessage(&TemplateMessage{
 	//	Message: &message.TemplateMessage{
@@ -82,7 +81,7 @@ func (m *Module) Start(_ *hub.Server) {
 	//})
 }
 
-func (m *Module) Stop(_ *hub.Server, wg *sync.WaitGroup) {
+func (m *Mod) Stop(_ *hub.Server, wg *sync.WaitGroup) {
 	close(m.senderLimit)
 	close(m.MessageQueue) // 关闭此channel后sender携程会自己关闭
 	m.MessageSenderWaitGroup.Wait()

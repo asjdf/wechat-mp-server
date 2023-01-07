@@ -8,20 +8,13 @@ import (
 	"wechat-mp-server/hub"
 )
 
-func init() {
-	Instance = &Mod{}
-	hub.RegisterModule(Instance)
-}
-
-var Instance *Mod
-
 type Mod struct {
 }
 
 func (m *Mod) GetModuleInfo() hub.ModuleInfo {
 	return hub.ModuleInfo{
 		ID:       hub.NewModuleID("atom", "timeoutTest"),
-		Instance: Instance,
+		Instance: m,
 	}
 }
 

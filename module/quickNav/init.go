@@ -10,36 +10,29 @@ import (
 	"wechat-mp-server/hub"
 )
 
-func init() {
-	instance = &mod{}
-	hub.RegisterModule(instance)
+type Mod struct {
 }
 
-var instance *mod
-
-type mod struct {
-}
-
-func (m *mod) GetModuleInfo() hub.ModuleInfo {
+func (m *Mod) GetModuleInfo() hub.ModuleInfo {
 	return hub.ModuleInfo{
 		ID:       hub.NewModuleID("atom", "quickNav"),
-		Instance: instance,
+		Instance: m,
 	}
 }
 
-func (m *mod) Init() {
+func (m *Mod) Init() {
 }
 
-func (m *mod) PostInit() {
+func (m *Mod) PostInit() {
 }
 
-func (m *mod) Serve(s *hub.Server) {
+func (m *Mod) Serve(s *hub.Server) {
 	s.MsgEngine.Group("快捷导航", menuHandler).MsgText("", 3).EventClick("")
 }
 
-func (m *mod) Start(_ *hub.Server) {
+func (m *Mod) Start(_ *hub.Server) {
 }
 
-func (m *mod) Stop(_ *hub.Server, wg *sync.WaitGroup) {
+func (m *Mod) Stop(_ *hub.Server, wg *sync.WaitGroup) {
 	wg.Done()
 }
