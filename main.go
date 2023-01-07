@@ -6,6 +6,7 @@ import (
 	"syscall"
 	"wechat-mp-server/config"
 	"wechat-mp-server/hub" // 框架
+	"wechat-mp-server/module/steggoDemo"
 	"wechat-mp-server/utils"
 
 	"wechat-mp-server/module/pong"
@@ -29,7 +30,7 @@ func main() {
 		&quickNav.Mod{},        // 快捷导航模块 用于解决微信菜单按钮不足的情况
 		&templateMessage.Mod{}, // 提供发送模板消息api
 		&timeoutTest.Mod{},     // 超时回复测试模块
-		//&steggoDemo.Mod{},
+		&steggoDemo.Mod{},      // steggo的应用案例
 	)
 
 	hub.Init()
