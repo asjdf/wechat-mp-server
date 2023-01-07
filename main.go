@@ -10,12 +10,10 @@ import (
 
 	"wechat-mp-server/module/pong"
 	"wechat-mp-server/module/quickNav"
-	"wechat-mp-server/module/steggoDemo"
 	"wechat-mp-server/module/templateMessage"
 	"wechat-mp-server/module/timeoutTest"
 	"wechat-mp-server/module/wechatPong"
 	//_ "wechat-mp-server/module/wechatApiProxy"  // 微信管理员代理模块 用于代理Wechat相关api接口并自动加上accessToken
-
 )
 
 func init() {
@@ -31,7 +29,7 @@ func main() {
 		&quickNav.Mod{},        // 快捷导航模块 用于解决微信菜单按钮不足的情况
 		&templateMessage.Mod{}, // 提供发送模板消息api
 		&timeoutTest.Mod{},     // 超时回复测试模块
-		&steggoDemo.Mod{},
+		//&steggoDemo.Mod{},
 	)
 
 	hub.Init()
