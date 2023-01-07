@@ -33,7 +33,7 @@ func (m *Mod) Serve(s *hub.Server) {
 
 		msg.Reply = &message.Reply{
 			MsgType: message.MsgTypeText,
-			MsgData: message.NewText(fmt.Sprintf("这%s个秘密你可不能和别人说哦！这个后端的版本是%s %v %s", tracker, hub.Version, len(tracker), msg.GetOpenID())),
+			MsgData: message.NewText(fmt.Sprintf("这%s个秘密你可不能和别人说哦！这个后端的版本是%s", tracker, hub.Version)),
 		}
 	})
 	s.MsgEngine.MsgText("^追踪.*$", 1, func(msg *hub.Message) {
