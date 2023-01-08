@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 	"wechat-mp-server/config"
 	"wechat-mp-server/hub" // 框架
 	"wechat-mp-server/module/steggoDemo"
@@ -20,6 +21,7 @@ import (
 func init() {
 	utils.WriteLogToFS()
 	config.Init()
+	time.Local = time.FixedZone("UTC+8", 8*60*60)
 }
 
 func main() {
