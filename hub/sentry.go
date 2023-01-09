@@ -11,7 +11,7 @@ func initSentry() {
 		return
 	}
 	err := sentry.Init(sentry.ClientOptions{
-		Release:          "wechat-mp-server@" + Version,
+		Release:          "wechat-mp-server@" + config.Version,
 		Dsn:              config.GlobalConfig.GetString("sentry.dsn"),
 		TracesSampleRate: 0.01,
 	})

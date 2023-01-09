@@ -4,6 +4,7 @@ import (
 	"github.com/getsentry/sentry-go"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"sync"
+	"wechat-mp-server/config"
 	"wechat-mp-server/hub"
 	"wechat-mp-server/module/templateMessage"
 )
@@ -71,7 +72,7 @@ func (m *Mod) Serve(s *hub.Server) {
 			Resend: true,
 		})
 		msg.Reply = &message.Reply{MsgType: message.MsgTypeText, MsgData: message.NewText("pong " + msg.OpenID + "\n" +
-			"Current version: " + hub.Version)}
+			"Current version: " + config.Version)}
 	}).MsgText("", 1).EventClick("")
 	// 由于group已经定义了一个中间件实现查询功能 所以后面注册具体方法的时候并不需要带上查询函数
 	// 同时由于路由是由baseKey+key拼接而成，所以也不需要单独设置key了

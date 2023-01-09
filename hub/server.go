@@ -15,8 +15,6 @@ import (
 	"wechat-mp-server/config"
 )
 
-var Version = "debug"
-
 var Instance *Server
 
 type Server struct {
@@ -30,8 +28,6 @@ var logger = logrus.WithField("hub", "internal")
 
 // Init 快速初始化
 func Init() {
-	logger.Info("wechat-mp-server version: ", Version)
-
 	initSentry()
 
 	// 初始化网络服务

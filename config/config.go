@@ -6,6 +6,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+const Version = "dev"
+
 type Config struct {
 	*viper.Viper
 }

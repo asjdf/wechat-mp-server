@@ -29,6 +29,6 @@ jobs:
 
       - name: Build
         run: |
-          GOOS=linux GPARCH=amd64 go build -o ${{ env.CI_BIN }} -ldflags "-X 'wechat-mp-server/hub.Version=$(git show -s --format=%h)'"
+          GOOS=linux GPARCH=amd64 go build -o ${{ env.CI_BIN }} -ldflags "-X 'wechat-mp-server/config.Version=$(git show -s --format=%h)'"
 
 #      到这里编译就已经结束了 请自己根据自己的需要编辑ci文件

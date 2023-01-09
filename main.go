@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/sirupsen/logrus"
 	"os"
 	"os/signal"
 	"syscall"
@@ -25,6 +26,7 @@ func init() {
 }
 
 func main() {
+	logrus.Info("wechat-mp-server version: ", config.Version)
 	// 新增module后请在下方引入
 	hub.RegisterModule(
 		&pong.Mod{},            // gin的ping-pong模块

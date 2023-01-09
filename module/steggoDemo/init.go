@@ -6,6 +6,7 @@ import (
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"regexp"
 	"sync"
+	"wechat-mp-server/config"
 	"wechat-mp-server/hub"
 )
 
@@ -33,7 +34,7 @@ func (m *Mod) Serve(s *hub.Server) {
 
 		msg.Reply = &message.Reply{
 			MsgType: message.MsgTypeText,
-			MsgData: message.NewText(fmt.Sprintf("这%s个秘密你可不能和别人说哦！这个后端的版本是%s", tracker, hub.Version)),
+			MsgData: message.NewText(fmt.Sprintf("这%s个秘密你可不能和别人说哦！这个后端的版本是%s", tracker, config.Version)),
 		}
 	})
 	s.MsgEngine.MsgText("^追踪.*$", 1, func(msg *hub.Message) {
