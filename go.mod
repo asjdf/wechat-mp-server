@@ -9,7 +9,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
-	github.com/silenceper/wechat/v2 v2.1.4
+	github.com/silenceper/wechat/v2 v2.1.5
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.15.0
 )
