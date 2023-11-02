@@ -242,8 +242,8 @@ github.com/sagikazarmark/locafero v0.3.0 h1:zT7VEGWC2DTflmccN/5T1etyKvxSxpHsjb9c
 github.com/sagikazarmark/locafero v0.3.0/go.mod h1:w+v7UsPNFwzF1cHuOajOOzoq4U7v/ig1mpRjqV+Bu1U=
 github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6gto+ugjYE=
 github.com/sagikazarmark/slog-shim v0.1.0/go.mod h1:SrcSrq8aKtyuqEI1uvTDTK1arOWRIczQRv+GVI1AkeQ=
-github.com/silenceper/wechat/v2 v2.1.5 h1:eIlv61v2bAFBG9ZE75zuRC0ALHEZEUq8JlJ9tfKvatg=
-github.com/silenceper/wechat/v2 v2.1.5/go.mod h1:7Iu3EhQYVtDUJAj+ZVRy8yom75ga7aDWv8RurLkVm0s=
+github.com/silenceper/wechat/v2 v2.1.6 h1:2br2DxNzhksmvIBJ+PfMqjqsvoZmd/5BnMIfjKYUBgc=
+github.com/silenceper/wechat/v2 v2.1.6/go.mod h1:7Iu3EhQYVtDUJAj+ZVRy8yom75ga7aDWv8RurLkVm0s=
 github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
