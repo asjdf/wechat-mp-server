@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/asjdf/steggo v1.0.0
-	github.com/fsnotify/fsnotify v1.7.0
+	github.com/fsnotify/fsnotify v1.8.0
 	github.com/getsentry/sentry-go v0.29.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
